@@ -1,19 +1,25 @@
-library(shiny)
+# ui.R
+# simple user interface for getting user input on his/her desired
+# violent crime to display as a choropleth map of the United States.
 
-shinyUI(pageWithSidebar(
-    headerPanel("Iris Species Predictor"),
-    sidebarPanel(
-        numericInput('length', 'Petal length', 0, min = 1, max = 7, step = 0.5),
-        numericInput('width', 'Petal width', 0.1, min = 0.1, max = 2.5, step = 0.1),
-        submitButton('Submit')
+shinyUI(fluidPage(
+    titlePanel("Violent Crime Rates by U.S. State"),
+    
+    sidebarLayout(
+        sidebarPanel(
+            helpText("Compare violent crime rates for assault, murder, 
+                     and rape in each of the 50 U.S. states in 1973."),
+            
+            # selectInput widget for getting user input
+            selectInput("var", 
+                        label="Choose a violent crime to display",
+                        choices=c("Assault",
+                                  "Murder",
+                                  "Rape"),
+                        selected="Assault")
         ),
-    mainPanel(
-        h3('Results of Prediction'),
-        h4('Your petal length'),
-        verbatimTextOutput("inputValue1"),
-        h4('Your petal width'),
-        verbatimTextOutput("inputValue2"),
-        verbatimTextOutput("prediction")
-        )
+        
+        # output choropleth map based on user input
+        mainPanel(plotOutput("map"))
     )
-)
+))
