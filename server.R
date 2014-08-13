@@ -2,7 +2,7 @@ library(shiny)
 library(datasets)
 # load USArrests dataset from the datasets library
 crimes <-data.frame(state = tolower(rownames(USArrests)), USArrests)
-# create a dataframe of state coordinates
+# create a dataframe of coordinates for the shape of each state
 states_map <-map_data("state")
 
 library(ggplot2)
