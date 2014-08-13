@@ -1,7 +1,5 @@
 ## Developing Data Products: Course Project
 
-Iris Species Predictor is a Shiny app built with RStudio that predicts the species of Iris flower based on the petal length and width inputed by the user. Prediction is made possible by a decision-tree algorithm called rPart.
+**crimeVis** was created as my course project for Coursera's **Developing Data Products class**. It demonstrates my understanding of the Shiny framework and how it extends R's already incredible capabilities as an interactive web application - without extensive knowledge of web-programming languages.
 
-The app was not designed to blow minds but simply to demonstrate my ability to create an interactive web app that uses R scripts.
-
-Enjoy!
+crimeVis sports a very simple user interface that requires a single user input (i.e., type of violent crime) through Shiny's selectInput widget and quickly creates a colorful **choropleth** map of violent crime rates across the U.S. in 1973. The data is provided in the **datasets** library that comes pre-packaged with all R installations.
