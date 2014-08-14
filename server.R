@@ -1,32 +1,29 @@
-library(shiny)
-library(datasets)
-# load USArrests dataset from the datasets library
-crimes <-data.frame(state = tolower(rownames(USArrests)), USArrests)
-# create a dataframe of coordinates for the shape of each state
-states_map <-map_data("state")
+# ui.R
+# Author: dnaeye (https://github.com/dnaeye)
+# Version: 1.0
+# Created: 8/14/2014
+# This is a simple user interface for getting user input on his/her desired
+# violent crime to display as a choropleth map of the United States.
 
-library(ggplot2)
-# load helpers script that contains main mapping function, ratemap
-source("helpers.R")
-
-shinyServer(function(input, output){
+shinyUI(fluidPage(
+    titlePanel("Violent Crime Rates by U.S. State"),
     
-    # create reactive map that changes based on live user input
-    output$map <- renderPlot({
-        data <- switch(input$var,
-                        "Assault" = crimes[,c("state", "Assault")],
-                        "Murder" = crimes[,c("state", "Murder")],
-                        "Rape" = crimes[,c("state", "Rape")])
-        values <- switch(input$var,
-                         "Assault" = crimes$Assault,
-                         "Murder" = crimes$Murder,
-                         "Rape" = crimes$Rape)
-        color <- switch(input$var,
-                        "Assault" = "darkgreen",
-                        "Murder" = "red",
-                        "Rape" = "darkviolet")
+    sidebarLayout(
+        sidebarPanel(
+            helpText("Compare violent crime rates for assault, murder, 
+                     and rape in each of the 50 U.S. states in 1973.
+                     Source: USArrests dataset in datasets library"),
+            
+            # selectInput widget for getting user input
+            selectInput("var", 
+                        label="Choose a violent crime to display",
+                        choices=c("Assault",
+                                  "Murder",
+                                  "Rape"),
+                        selected="Assault")
+        ),
         
-        # call to main mapping function, ratemap
-        ratemap(data, values, color)
-    })
-})
+        # output choropleth map based on user input
+        mainPanel(plotOutput("map"))
+    )
+))
